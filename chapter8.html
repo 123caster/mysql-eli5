@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第8章：删数据 DELETE - MySQL 入门</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html" class="nav-home">🏠 首页</a>
+  <a href="chapter1.html">第1章</a>
+  <a href="chapter2.html">第2章</a>
+  <a href="chapter3.html">第3章</a>
+  <a href="chapter4.html">第4章</a>
+  <a href="chapter5.html">第5章</a>
+  <a href="chapter6.html">第6章</a>
+  <a href="chapter7.html">第7章</a>
+  <a href="chapter8.html" class="active">第8章</a>
+  <a href="chapter9.html">第9章</a>
+  <a href="chapter10.html">第10章</a>
+</nav>
+
+<div class="container">
+  <h1 class="chapter-title"><span class="chapter-num">第8章</span>删数据 DELETE</h1>
+
+  <section class="content">
+    <h2>🗑️ DELETE 是什么？</h2>
+    <p><strong>DELETE</strong> 用来<strong>删除</strong>数据。</p>
+  </section>
+
+  <section class="content">
+    <h2>📌 删除数据</h2>
+<pre><code><span class="cm">-- 删除翼龙</span>
+<span class="kw">DELETE FROM</span> dinosaurs
+<span class="kw">WHERE</span> name = <span class="str">'翼龙'</span>;</code></pre>
+    <p>删除后的表：</p>
+    <table>
+      <tr><th>id</th><th>name</th><th>type</th><th>age</th></tr>
+      <tr><td>1</td><td>霸王龙</td><td>肉食恐龙</td><td>25</td></tr>
+      <tr><td>2</td><td>三角龙</td><td>草食恐龙</td><td>20</td></tr>
+      <tr><td>4</td><td>剑龙</td><td>草食恐龙</td><td>22</td></tr>
+    </table>
+  </section>
+
+  <section class="content">
+    <div class="warn-box">
+      <p><strong>🚨 小心！</strong></p>
+      <p>DELETE 删了<strong>就真的没了</strong>！不像电脑的回收站可以恢复！</p>
+      <p>没有 WHERE 的话，会把<strong>整张表的数据都删掉</strong>！</p>
+    </div>
+  </section>
+
+  <section class="content">
+    <h2>📌 清空整张表</h2>
+<pre><code><span class="cm">-- 删除所有数据（危险！）</span>
+<span class="kw">DELETE FROM</span> dinosaurs;</code></pre>
+  </section>
+
+  <section class="content">
+    <div class="highlight-box">
+      <div class="big">🗑️ DELETE FROM 表名 WHERE 条件 = 删除数据</div>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a href="chapter7.html" class="nav-btn">← 上一章</a>
+    <a href="chapter9.html" class="nav-btn next">下一章 →</a>
+  </div>
+</div>
+
+</body>
+</html>
