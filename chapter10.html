@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第10章：索引入门 - MySQL 入门</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html" class="nav-home">🏠 首页</a>
+  <a href="chapter1.html">第1章</a>
+  <a href="chapter2.html">第2章</a>
+  <a href="chapter3.html">第3章</a>
+  <a href="chapter4.html">第4章</a>
+  <a href="chapter5.html">第5章</a>
+  <a href="chapter6.html">第6章</a>
+  <a href="chapter7.html">第7章</a>
+  <a href="chapter8.html">第8章</a>
+  <a href="chapter9.html">第9章</a>
+  <a href="chapter10.html" class="active">第10章</a>
+</nav>
+
+<div class="container">
+  <h1 class="chapter-title"><span class="chapter-num">第10章</span>索引入门</h1>
+
+  <section class="content">
+    <h2>📑 索引是什么？</h2>
+    <p>索引是 MySQL 里一个<strong>很重要</strong>的概念。</p>
+    <div class="analogy">
+      <p>想象一本书的<strong>目录</strong>！</p>
+      <p>如果没有目录，想找「MySQL 是什么」这一章，你得<strong>一页一页翻</strong>...</p>
+      <p>有了目录，直接翻到那一页，<strong>快多了</strong>！</p>
+    </div>
+    <p>索引就像书的目录，帮 MySQL <strong>快速找到</strong>数据。</p>
+  </section>
+
+  <section class="content">
+    <h2>💻 创建索引</h2>
+<pre><code><span class="cm">-- 给 name 列创建索引（像给书加目录）</span>
+<span class="kw">CREATE INDEX</span> idx_name <span class="kw">ON</span> dinosaurs(name);
+
+<span class="cm">-- 给常用的查找加索引</span>
+<span class="kw">CREATE INDEX</span> idx_type_age <span class="kw">ON</span> dinosaurs(type, age);</code></pre>
+  </section>
+
+  <section class="content">
+    <h2>⚡ 有索引 vs 没索引</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="icon">❌</div>
+        <div class="title">没有索引</div>
+        <div class="desc">100万条数据 → 要翻100万次 😫</div>
+      </div>
+      <div class="card">
+        <div class="icon">✅</div>
+        <div class="title">有索引</div>
+        <div class="desc">100万条数据 → 翻20次搞定！😄</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content">
+    <div class="warn-box">
+      <p><strong>⚠️ 注意：索引不是越多越好！</strong></p>
+      <p>就像书不能加太多便利贴，会变乱。</p>
+      <p>索引会占用<strong>额外空间</strong>，而且<strong>修改数据</strong>时也要更新索引，慢了。</p>
+      <p>只给<strong>经常查询</strong>的列加索引！</p>
+    </div>
+  </section>
+
+  <section class="content">
+    <div class="highlight-box">
+      <div class="big">📑 索引 = 书的目录 = 快速查找的秘诀</div>
+    </div>
+  </section>
+
+  <section class="content">
+    <h2>🎉 恭喜你入门了！</h2>
+    <p>你已经学会了 MySQL 的基础！</p>
+    <p>接下来可以学习：</p>
+    <ul>
+      <li>📊 <strong>聚合函数</strong>：COUNT、SUM、AVG（统计）</li>
+      <li>🔗 <strong>JOIN</strong>：连接多个表（合并数据）</li>
+      <li>📈 <strong>GROUP BY</strong>：分组统计</li>
+      <li>🌲 <strong>B+ 树索引</strong>：深入理解索引原理</li>
+      <li>🔄 <strong>事务</strong>：保证数据一致性</li>
+    </ul>
+  </section>
+
+  <div class="nav-footer">
+    <a href="chapter9.html" class="nav-btn">← 上一章</a>
+    <a href="index.html" class="nav-btn next">返回目录 🏠</a>
+  </div>
+</div>
+
+</body>
+</html>
