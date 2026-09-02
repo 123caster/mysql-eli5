@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MySQL 入门教程</title>
+<style>
+  :root {
+    --bg: #fef9f3;
+    --card: #ffffff;
+    --text: #3d3d3d;
+    --muted: #888;
+    --accent: #ff6b6b;
+    --accent-soft: #ffeef0;
+    --border: #f0e6dc;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.8;
+    font-size: 17px;
+  }
+  header.hero {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 60%, #ff7979 100%);
+    color: #fff;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  header.hero .emoji { font-size: 72px; margin-bottom: 10px; }
+  header.hero h1 { margin: 0 0 14px; font-size: 36px; }
+  header.hero p { margin: 0; opacity: .95; font-size: 18px; }
+  .container { max-width: 880px; margin: 0 auto; padding: 40px 20px; }
+  .chapters { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+  .chapter-card {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .chapter-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: 0 8px 24px rgba(255,107,107,0.15);
+  }
+  .chapter-card .num {
+    background: var(--accent);
+    color: white;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .chapter-card:hover .num { background: var(--accent); }
+  .chapter-card .info .title { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+  .chapter-card .info .desc { font-size: 14px; color: var(--muted); }
+  footer { text-align: center; color: var(--muted); padding: 40px 20px; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="emoji">📦</div>
+  <h1>MySQL 入门教程</h1>
+  <p>像给小朋友讲故事一样学数据库</p>
+</header>
+
+<div class="container">
+  <h2 style="margin-top:0;">📚 课程目录</h2>
+  <div class="chapters">
+    <a href="chapter1.html" class="chapter-card">
+      <div class="num">1</div>
+      <div class="info">
+        <div class="title">什么是数据库？</div>
+        <div class="desc">理解数据存储的概念</div>
+      </div>
+    </a>
+    <a href="chapter2.html" class="chapter-card">
+      <div class="num">2</div>
+      <div class="info">
+        <div class="title">MySQL 是什么？</div>
+        <div class="desc">认识这个可爱的数据库</div>
+      </div>
+    </a>
+    <a href="chapter3.html" class="chapter-card">
+      <div class="num">3</div>
+      <div class="info">
+        <div class="title">表 - 数据的家</div>
+        <div class="desc">学习表的概念和结构</div>
+      </div>
+    </a>
+    <a href="chapter4.html" class="chapter-card">
+      <div class="num">4</div>
+      <div class="info">
+        <div class="title">SQL 语言</div>
+        <div class="desc">和数据库说话的工具</div>
+      </div>
+    </a>
+    <a href="chapter5.html" class="chapter-card">
+      <div class="num">5</div>
+      <div class="info">
+        <div class="title">查数据 SELECT</div>
+        <div class="desc">从表中查看数据</div>
+      </div>
+    </a>
+    <a href="chapter6.html" class="chapter-card">
+      <div class="num">6</div>
+      <div class="info">
+        <div class="title">加数据 INSERT</div>
+        <div class="desc">向表中添加新数据</div>
+      </div>
+    </a>
+    <a href="chapter7.html" class="chapter-card">
+      <div class="num">7</div>
+      <div class="info">
+        <div class="title">改数据 UPDATE</div>
+        <div class="desc">修改已有的数据</div>
+      </div>
+    </a>
+    <a href="chapter8.html" class="chapter-card">
+      <div class="num">8</div>
+      <div class="info">
+        <div class="title">删数据 DELETE</div>
+        <div class="desc">删除不需要的数据</div>
+      </div>
+    </a>
+    <a href="chapter9.html" class="chapter-card">
+      <div class="num">9</div>
+      <div class="info">
+        <div class="title">条件 WHERE</div>
+        <div class="desc">筛选想要的数据</div>
+      </div>
+    </a>
+    <a href="chapter10.html" class="chapter-card">
+      <div class="num">10</div>
+      <div class="info">
+        <div class="title">索引入门</div>
+        <div class="desc">让查询更快的方法</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <p>MySQL 入门教程 · 用最简单的方式学数据库</p>
+</footer>
+
+</body>
+</html>
