@@ -3,160 +3,128 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MySQL 入门教程</title>
-<style>
-  :root {
-    --bg: #fef9f3;
-    --card: #ffffff;
-    --text: #3d3d3d;
-    --muted: #888;
-    --accent: #ff6b6b;
-    --accent-soft: #ffeef0;
-    --border: #f0e6dc;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    line-height: 1.8;
-    font-size: 17px;
-  }
-  header.hero {
-    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 60%, #ff7979 100%);
-    color: #fff;
-    padding: 60px 20px;
-    text-align: center;
-  }
-  header.hero .emoji { font-size: 72px; margin-bottom: 10px; }
-  header.hero h1 { margin: 0 0 14px; font-size: 36px; }
-  header.hero p { margin: 0; opacity: .95; font-size: 18px; }
-  .container { max-width: 880px; margin: 0 auto; padding: 40px 20px; }
-  .chapters { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-  .chapter-card {
-    background: var(--card);
-    border: 2px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    text-decoration: none;
-    color: var(--text);
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  .chapter-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--accent);
-    box-shadow: 0 8px 24px rgba(255,107,107,0.15);
-  }
-  .chapter-card .num {
-    background: var(--accent);
-    color: white;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-  .chapter-card:hover .num { background: var(--accent); }
-  .chapter-card .info .title { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
-  .chapter-card .info .desc { font-size: 14px; color: var(--muted); }
-  footer { text-align: center; color: var(--muted); padding: 40px 20px; }
-</style>
+<title>MySQL 进阶教程 - 索引底层原理</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<header class="hero">
-  <div class="emoji">📦</div>
-  <h1>MySQL 入门教程</h1>
-  <p>像给小朋友讲故事一样学数据库</p>
-</header>
+<nav class="nav-bar">
+  <a href="index.html" class="nav-home active">📚 MySQL 进阶</a>
+  <a href="chapter1.html">第1章</a>
+  <a href="chapter2.html">第2章</a>
+  <a href="chapter3.html">第3章</a>
+  <a href="chapter4.html">第4章</a>
+  <a href="chapter5.html">第5章</a>
+  <a href="chapter6.html">第6章</a>
+  <a href="chapter7.html">第7章</a>
+</nav>
 
 <div class="container">
-  <h2 style="margin-top:0;">📚 课程目录</h2>
-  <div class="chapters">
-    <a href="chapter1.html" class="chapter-card">
-      <div class="num">1</div>
-      <div class="info">
-        <div class="title">什么是数据库？</div>
-        <div class="desc">理解数据存储的概念</div>
-      </div>
-    </a>
-    <a href="chapter2.html" class="chapter-card">
-      <div class="num">2</div>
-      <div class="info">
-        <div class="title">MySQL 是什么？</div>
-        <div class="desc">认识这个可爱的数据库</div>
-      </div>
-    </a>
-    <a href="chapter3.html" class="chapter-card">
-      <div class="num">3</div>
-      <div class="info">
-        <div class="title">表 - 数据的家</div>
-        <div class="desc">学习表的概念和结构</div>
-      </div>
-    </a>
-    <a href="chapter4.html" class="chapter-card">
-      <div class="num">4</div>
-      <div class="info">
-        <div class="title">SQL 语言</div>
-        <div class="desc">和数据库说话的工具</div>
-      </div>
-    </a>
-    <a href="chapter5.html" class="chapter-card">
-      <div class="num">5</div>
-      <div class="info">
-        <div class="title">查数据 SELECT</div>
-        <div class="desc">从表中查看数据</div>
-      </div>
-    </a>
-    <a href="chapter6.html" class="chapter-card">
-      <div class="num">6</div>
-      <div class="info">
-        <div class="title">加数据 INSERT</div>
-        <div class="desc">向表中添加新数据</div>
-      </div>
-    </a>
-    <a href="chapter7.html" class="chapter-card">
-      <div class="num">7</div>
-      <div class="info">
-        <div class="title">改数据 UPDATE</div>
-        <div class="desc">修改已有的数据</div>
-      </div>
-    </a>
-    <a href="chapter8.html" class="chapter-card">
-      <div class="num">8</div>
-      <div class="info">
-        <div class="title">删数据 DELETE</div>
-        <div class="desc">删除不需要的数据</div>
-      </div>
-    </a>
-    <a href="chapter9.html" class="chapter-card">
-      <div class="num">9</div>
-      <div class="info">
-        <div class="title">条件 WHERE</div>
-        <div class="desc">筛选想要的数据</div>
-      </div>
-    </a>
-    <a href="chapter10.html" class="chapter-card">
-      <div class="num">10</div>
-      <div class="info">
-        <div class="title">索引入门</div>
-        <div class="desc">让查询更快的方法</div>
-      </div>
-    </a>
-  </div>
-</div>
+  <header class="hero">
+    <div class="hero-emoji">🌲</div>
+    <h1>MySQL 进阶教程</h1>
+    <p>从"会用 MySQL"到"理解 MySQL 底层原理"</p>
+  </header>
 
-<footer>
-  <p>MySQL 入门教程 · 用最简单的方式学数据库</p>
-</footer>
+  <section class="intro">
+    <h2>📖 关于本教程</h2>
+    <p>本教程面向已掌握基础 CRUD，学习过慢 SQL 优化的开发者。涵盖 MySQL 核心知识点，包括索引、事务、锁、日志、Buffer Pool、表设计和主从复制。</p>
+  </section>
+
+  <section class="chapters">
+    <h2>📚 课程目录</h2>
+
+    <div class="chapter-grid">
+      <a href="chapter1.html" class="chapter-card">
+        <div class="chapter-icon">🌲</div>
+        <div class="chapter-info">
+          <div class="chapter-num">第1章</div>
+          <div class="chapter-title">索引底层原理</div>
+          <div class="chapter-desc">B+ 树 · 聚簇/二级索引 · 回表 · 覆盖索引 · 最左前缀 · ICP</div>
+        </div>
+        <div class="chapter-arrow">→</div>
+      </a>
+
+      <a href="chapter2.html" class="chapter-card">
+        <div class="chapter-icon">🔄</div>
+        <div class="chapter-info">
+          <div class="chapter-num">第2章</div>
+          <div class="chapter-title">事务与 MVCC</div>
+          <div class="chapter-desc">ACID · 四种隔离级别 · MVCC · undo log · ReadView</div>
+        </div>
+        <div class="chapter-arrow">→</div>
+      </a>
+
+      <a href="chapter3.html" class="chapter-card">
+        <div class="chapter-icon">🔒</div>
+        <div class="chapter-info">
+          <div class="chapter-num">第3章</div>
+          <div class="chapter-title">锁机制</div>
+          <div class="chapter-desc">行锁/表锁 · 间隙锁 · 临键锁 · 死锁排查</div>
+        </div>
+        <div class="chapter-arrow">→</div>
+      </a>
+
+      <a href="chapter4.html" class="chapter-card">
+        <div class="chapter-icon">📝</div>
+        <div class="chapter-info">
+          <div class="chapter-num">第4章</div>
+          <div class="chapter-title">SQL 执行流程与日志</div>
+          <div class="chapter-desc">连接器 · 分析器 · redo/undo/binlog · 两阶段提交</div>
+        </div>
+        <div class="chapter-arrow">→</div>
+      </a>
+
+      <a href="chapter5.html" class="chapter-card">
+        <div class="chapter-icon">💾</div>
+        <div class="chapter-info">
+          <div class="chapter-num">第5章</div>
+          <div class="chapter-title">Buffer Pool</div>
+          <div class="chapter-desc">页结构 · LRU 淘汰 · 脏页刷新 · Change Buffer</div>
+        </div>
+        <div class="chapter-arrow">→</div>
+      </a>
+
+      <a href="chapter6.html" class="chapter-card">
+        <div class="chapter-icon">🏗️</div>
+        <div class="chapter-info">
+          <div class="chapter-num">第6章</div>
+          <div class="chapter-title">表设计与字段类型</div>
+          <div class="chapter-desc">三大范式 · CHAR/VARCHAR · 整型选择 · 时间类型</div>
+        </div>
+        <div class="chapter-arrow">→</div>
+      </a>
+
+      <a href="chapter7.html" class="chapter-card">
+        <div class="chapter-icon">🔄</div>
+        <div class="chapter-info">
+          <div class="chapter-num">第7章</div>
+          <div class="chapter-title">主从复制与高可用</div>
+          <div class="chapter-desc">binlog 复制 · 复制格式 · 读写分离 · 分库分表</div>
+        </div>
+        <div class="chapter-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <section class="prerequisites">
+    <h2>📋 学习前提</h2>
+    <ul>
+      <li>✅ 基础 SQL：SELECT / INSERT / UPDATE / DELETE</li>
+      <li>✅ WHERE 条件、JOIN、GROUP BY、ORDER BY、LIMIT</li>
+      <li>✅ 能使用 EXPLAIN 分析 SQL 执行计划</li>
+      <li>✅ 了解基础索引概念：普通索引、唯一索引、主键索引</li>
+    </ul>
+  </section>
+
+  <section class="resources">
+    <h2>📚 推荐资源</h2>
+    <ul>
+      <li><strong>书籍</strong>：《MySQL 是怎样运行的》《高性能 MySQL（第 4 版）》《MySQL 技术内幕》</li>
+      <li><strong>工具</strong>：本地 MySQL 8.0 + EXPLAIN ANALYZE</li>
+      <li><strong>刷题</strong>：牛客网 / LeetCode 数据库题</li>
+    </ul>
+  </section>
+</div>
 
 </body>
 </html>
