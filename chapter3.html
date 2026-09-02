@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第3章：表 - 数据的家 - MySQL 入门</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html" class="nav-home">🏠 首页</a>
+  <a href="chapter1.html">第1章</a>
+  <a href="chapter2.html">第2章</a>
+  <a href="chapter3.html" class="active">第3章</a>
+  <a href="chapter4.html">第4章</a>
+  <a href="chapter5.html">第5章</a>
+  <a href="chapter6.html">第6章</a>
+  <a href="chapter7.html">第7章</a>
+  <a href="chapter8.html">第8章</a>
+  <a href="chapter9.html">第9章</a>
+  <a href="chapter10.html">第10章</a>
+</nav>
+
+<div class="container">
+  <h1 class="chapter-title"><span class="chapter-num">第3章</span>表 - 数据的家</h1>
+
+  <section class="content">
+    <h2>📊 表是什么？</h2>
+    <p>在 MySQL 里，数据都放在<strong>表（Table）</strong>里。</p>
+    <div class="analogy">
+      <p>想象一下<strong>Excel 表格</strong>！</p>
+      <ul>
+        <li>有<strong>行</strong>（横着的一条一条）</li>
+        <li>有<strong>列</strong>（竖着的一栏一栏）</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="content">
+    <h2>🦕 恐龙表示例</h2>
+    <p>比如我们创建一个「<strong>恐龙表</strong>」：</p>
+    <table>
+      <tr><th>id（编号）</th><th>name（名字）</th><th>type（种类）</th><th>age（年龄）</th></tr>
+      <tr><td>1</td><td>霸王龙</td><td>肉食恐龙</td><td>25</td></tr>
+      <tr><td>2</td><td>三角龙</td><td>草食恐龙</td><td>20</td></tr>
+      <tr><td>3</td><td>翼龙</td><td>飞行恐龙</td><td>15</td></tr>
+    </table>
+    <div class="analogy">
+      <p><strong>每一行</strong> = 一只恐龙的信息</p>
+      <p><strong>每一列</strong> = 恐龙的一个特点（名字、种类、年龄...）</p>
+      <p><strong>id</strong> = 给每只恐龙的编号，像学号一样</p>
+    </div>
+  </section>
+
+  <section class="content">
+    <h2>💻 创建表的 SQL</h2>
+<pre><code><span class="cm">-- 创建恐龙表</span>
+<span class="kw">CREATE TABLE</span> dinosaurs (
+  id      <span class="fn">INT</span>          <span class="kw">PRIMARY KEY</span> <span class="fn">AUTO_INCREMENT</span>,
+  name    <span class="fn">VARCHAR</span>(<span class="num">50</span>),
+  type    <span class="fn">VARCHAR</span>(<span class="num">50</span>),
+  age     <span class="fn">INT</span>
+);
+
+<span class="cm">-- 解释一下：</span>
+<span class="cm">-- VARCHAR(50) = 最多50个字的文本</span>
+<span class="cm">-- INT = 整数（1, 2, 3...）</span>
+<span class="cm">-- PRIMARY KEY = 主键，每行的唯一标识</span>
+<span class="cm">-- AUTO_INCREMENT = 自动编号</span></code></pre>
+  </section>
+
+  <section class="content">
+    <div class="highlight-box">
+      <div class="big">📊 表 = 数据的「Excel 表格」</div>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a href="chapter2.html" class="nav-btn">← 上一章</a>
+    <a href="chapter4.html" class="nav-btn next">下一章 →</a>
+  </div>
+</div>
+
+</body>
+</html>
