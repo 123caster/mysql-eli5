@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MySQL 入门 - 讲给小朋友听</title>
+<style>
+  :root {
+    --bg: #fef9f3;
+    --card: #ffffff;
+    --text: #3d3d3d;
+    --muted: #888;
+    --accent: #ff6b6b;
+    --accent-soft: #ffeef0;
+    --accent2: #4ecdc4;
+    --accent2-soft: #e8faf8;
+    --accent3: #ffe66d;
+    --border: #f0e6dc;
+    --code-bg: #2d3436;
+    --code-text: #dfe6e9;
+    --code-keyword: #ff6b6b;
+    --code-string: #a8e6cf;
+    --code-comment: #636e72;
+    --code-number: #ffe66d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    line-height: 1.8;
+    font-size: 17px;
+  }
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+  header.hero {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 60%, #ff7979 100%);
+    color: #fff;
+    padding: 60px 20px 50px;
+    text-align: center;
+    border-radius: 0 0 40px 40px;
+  }
+  header.hero .emoji { font-size: 72px; margin-bottom: 10px; }
+  header.hero h1 {
+    margin: 0 0 14px;
+    font-size: 36px;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  }
+  header.hero p {
+    margin: 0;
+    opacity: .95;
+    font-size: 18px;
+    font-weight: 300;
+  }
+  header.hero .age-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.25);
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-top: 16px;
+    font-size: 14px;
+  }
+  nav.toc {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin: 28px 0;
+  }
+  nav.toc h2 {
+    font-size: 16px;
+    margin: 0 0 12px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  nav.toc ol {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 8px;
+  }
+  nav.toc li { margin: 4px 0; }
+  nav.toc a {
+    color: var(--text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--accent-soft);
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  nav.toc a:hover {
+    background: var(--accent);
+    color: white;
+    transform: translateX(4px);
+  }
+  nav.toc .num {
+    background: var(--accent);
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  nav.toc a:hover .num { background: white; color: var(--accent); }
+  section {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    margin: 24px 0;
+    box-shadow: 0 4px 20px rgba(255,107,107,0.08);
+  }
+  .emoji-icon { font-size: 48px; text-align: center; margin-bottom: 16px; }
+  h2.sec-title {
+    font-size: 26px;
+    margin: 0 0 20px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  h2.sec-title .tag {
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 13px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+  h3 { font-size: 20px; margin: 28px 0 12px; color: var(--text); }
+  p { margin: 14px 0; }
+  .story {
+    background: linear-gradient(135deg, #fff9e6 0%, #fff5d6 100%);
+    border: 2px dashed #ffe66d;
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+  .story .title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #cc8800;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .analogy {
+    background: var(--accent2-soft);
+    border-left: 4px solid var(--accent2);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  .analogy .label {
+    font-weight: 700;
+    color: #2d9c93;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  code {
+    background: #f5f0eb;
+    border: 1px solid #e8dfd5;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-family: "SF Mono", "JetBrains Mono", Consolas, "Courier New", monospace;
+    font-size: 14px;
+    color: #c0392b;
+  }
+  pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    border-radius: 14px;
+    padding: 20px 24px;
+    overflow-x: auto;
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 16px 0;
+  }
+  pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+  }
+  .kw { color: var(--code-keyword); font-weight: 700; }
+  .str { color: var(--code-string); }
+  .cm { color: var(--code-comment); font-style: italic; }
+  .num { color: var(--code-number); }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 16px 0;
+    font-size: 15px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+    text-align: left;
+  }
+  th {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff7979 100%);
+    color: white;
+    font-weight: 600;
+  }
+  tr:nth-child(even) td { background: #faf8f5; }
+  .highlight-box {
+    background: linear-gradient(135deg, var(--accent-soft) 0%, #fff5f5 100%);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    text-align: center;
+  }
+  .highlight-box .big {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .step-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0;
+  }
+  .step-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 12px 0;
+    padding: 12px;
+    background: #faf8f5;
+    border-radius: 10px;
+  }
+  .step-list .step-num {
+    background: var(--accent);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .emoji-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    font-size: 32px;
+    margin: 20px 0;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .card {
+    background: linear-gradient(135deg, #faf8f5 0%, #fff 100%);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+  .card:hover { transform: translateY(-4px); }
+  .card .icon { font-size: 40px; margin-bottom: 8px; }
+  .card .title { font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+  .card .desc { font-size: 14px; color: var(--muted); }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 40px;
+    padding: 20px;
+  }
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    z-index: 1000;
+    transition: width 0.1s;
+  }
+  @media (max-width: 640px) {
+    section { padding: 20px 16px; }
+    header.hero h1 { font-size: 26px; }
+    h2.sec-title { font-size: 22px; }
+    pre { padding: 14px 16px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<header class="hero">
+  <div class="emoji">📦</div>
+  <h1>MySQL 入门教程</h1>
+  <p>像给小朋友讲故事一样学数据库</p>
+  <div class="age-tag">🌟 适合零基础新手 🌟</div>
+</header>
+
+<div class="container">
+
+<nav class="toc">
+  <h2>📚 目录导航</h2>
+  <ol>
+    <li><a href="#ch1"><span class="num">1</span>什么是数据库？</a></li>
+    <li><a href="#ch2"><span class="num">2</span>MySQL 是什么？</a></li>
+    <li><a href="#ch3"><span class="num">3</span>表 - 数据的家</a></li>
+    <li><a href="#ch4"><span class="num">4</span>SQL - 和数据库说话</a></li>
+    <li><a href="#ch5"><span class="num">5</span>查数据 SELECT</a></li>
+    <li><a href="#ch6"><span class="num">6</span>加数据 INSERT</a></li>
+    <li><a href="#ch7"><span class="num">7</span>改数据 UPDATE</a></li>
+    <li><a href="#ch8"><span class="num">8</span>删数据 DELETE</a></li>
+    <li><a href="#ch9"><span class="num">9</span>条件 WHERE</a></li>
+    <li><a href="#ch10"><span class="num">10</span>索引是什么</a></li>
+  </ol>
+</nav>
+
+<!-- 第一章：什么是数据库 -->
+<section id="ch1">
+  <div class="emoji-icon">🏠</div>
+  <h2 class="sec-title">
+    1. 什么是数据库？
+    <span class="tag">概念</span>
+  </h2>
+
+  <div class="story">
+    <div class="title">📖 小明的故事</div>
+    <p>小明喜欢收集恐龙玩具。他把每只恐龙的<strong>名字</strong>、<strong>年龄</strong>、<strong>种类</strong>写在纸上。</p>
+    <p>后来恐龙太多了，纸张乱糟糟的，找不到想找的那只。</p>
+    <p>于是小明买了一个<strong>整理箱</strong>，给每只恐龙一个固定的位置，还做了标签。</p>
+    <p>现在找恐龙超方便！🎉</p>
+  </div>
+
+  <div class="analogy">
+    <div class="label">🤔 数据库就像...</div>
+    <p>一个<strong>超大超智能的整理箱</strong>！它可以：</p>
+    <ul>
+      <li>📦 <strong>存放</strong>超多数据（几百万条都没问题）</li>
+      <li>🔍 <strong>快速找到</strong>你想要的数据</li>
+      <li>✏️ <strong>随时添加、修改、删除</strong>数据</li>
+      <li>🔒 <strong>保护</strong>你的数据不丢失</li>
+    </ul>
+  </div>
+
+  <div class="highlight-box">
+    <div class="big">数据库 = 存数据的「大仓库」</div>
+  </div>
+
+  <div class="emoji-row">📦 🔍 ✏️ 🗑️ 🔒</div>
+</section>
+
+<!-- 第二章：MySQL 是什么 -->
+<section id="ch2">
+  <div class="emoji-icon">🐬</div>
+  <h2 class="sec-title">
+    2. MySQL 是什么？
+    <span class="tag">工具</span>
+  </h2>
+
+  <p>好，现在我们知道需要一个<strong>数据库</strong>来存数据。但是谁来<strong>管理</strong>这个数据库呢？</p>
+
+  <p>就像班级需要<strong>班长</strong>来管理班级一样，我们需要一个<strong>数据库管理系统</strong>来管理数据库。</p>
+
+  <div class="analogy">
+    <div class="label">🐬 MySQL 是什么？</div>
+    <p><strong>MySQL</strong> 就是这样一个「班长」！它是一个超级流行的开源数据库管理系统。</p>
+    <p>很多很多网站和 App 都在用它，比如 <strong>Facebook</strong>、<strong>YouTube</strong>、<strong>淘宝</strong>...</p>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="icon">🐧</div>
+      <div class="title">免费开源</div>
+      <div class="desc">不要钱，大家都能用</div>
+    </div>
+    <div class="card">
+      <div class="icon">⚡</div>
+      <div class="title">速度很快</div>
+      <div class="desc">查询数据特别快</div>
+    </div>
+    <div class="card">
+      <div class="icon">🧸</div>
+      <div class="title">简单易学</div>
+      <div class="desc">命令很好理解</div>
+    </div>
+    <div class="card">
+      <div class="icon">🌍</div>
+      <div class="title">全球通用</div>
+      <div class="desc">全世界的网站都在用</div>
+    </div>
+  </div>
+</section>
+
+<!-- 第三章：表 -->
+<section id="ch3">
+  <div class="emoji-icon">📊</div>
+  <h2 class="sec-title">
+    3. 表 - 数据的家
+    <span class="tag">核心</span>
+  </h2>
+
+  <p>在 MySQL 里，数据都放在<strong>表（Table）</strong>里。</p>
+
+  <div class="analogy">
+    <div class="label">📊 表是什么？</div>
+    <p>想象一下<strong>Excel 表格</strong>！</p>
+    <ul>
+      <li>有<strong>行</strong>（横着的一条一条）</li>
+      <li>有<strong>列</strong>（竖着的一栏一栏）</li>
+    </ul>
+  </div>
+
+  <p>比如我们创建一个「<strong>恐龙表</strong>」：</p>
+
+  <table>
+    <tr>
+      <th>id（编号）</th>
+      <th>name（名字）</th>
+      <th>type（种类）</th>
+      <th>age（年龄）</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>霸王龙</td>
+      <td>肉食恐龙</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>三角龙</td>
+      <td>草食恐龙</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>翼龙</td>
+      <td>飞行恐龙</td>
+      <td>15</td>
+    </tr>
+  </table>
+
+  <div class="analogy">
+    <div class="label">📝 解释一下</div>
+    <ul>
+      <li><strong>每一行</strong> = 一只恐龙的信息</li>
+      <li><strong>每一列</strong> = 恐龙的一个特点（名字、种类、年龄...）</li>
+      <li><strong>id</strong> = 给每只恐龙的编号，像学号一样，方便找到它</li>
+    </ul>
+  </div>
+
+  <p>在 MySQL 里创建这个表：</p>
+<pre><code><span class="cm">-- 创建恐龙表</span>
+<span class="kw">CREATE TABLE</span> dinosaurs (
+  id      <span class="fn">INT</span>          <span class="kw">PRIMARY KEY</span> <span class="fn">AUTO_INCREMENT</span>,
+  name    <span class="fn">VARCHAR</span>(<span class="num">50</span>),
+  type    <span class="fn">VARCHAR</span>(<span class="num">50</span>),
+  age     <span class="fn">INT</span>
+);
+
+<span class="cm">-- 解释一下：</span>
+<span class="cm">-- VARCHAR(50) = 最多50个字的文本</span>
+<span class="cm">-- INT = 整数（1, 2, 3...）</span>
+<span class="cm">-- PRIMARY KEY = 主键，每行的唯一标识</span>
+<span class="cm">-- AUTO_INCREMENT = 自动编号</span></code></pre>
+</section>
+
+<!-- 第四章：SQL -->
+<section id="ch4">
+  <div class="emoji-icon">💬</div>
+  <h2 class="sec-title">
+    4. SQL - 和数据库说话
+    <span class="tag">语言</span>
+  </h2>
+
+  <p>我们想对数据库<strong>做事情</strong>（查数据、加数据、改数据、删数据），就需要用一种「<strong>语言</strong>」来告诉 MySQL。</p>
+
+  <div class="analogy">
+    <div class="label">💬 SQL 是什么？</div>
+    <p><strong>SQL</strong>（Structured Query Language，发音是 "S-Q-L" 或者 "sequel"）</p>
+    <p>它就是和 MySQL 说话的<strong>语言</strong>！</p>
+  </div>
+
+  <p>SQL 有几种基本的「<strong>动词</strong>」：</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="icon">🔍</div>
+      <div class="title">SELECT</div>
+      <div class="desc">查数据（看有什么）</div>
+    </div>
+    <div class="card">
+      <div class="icon">➕</div>
+      <div class="title">INSERT</div>
+      <div class="desc">加数据（添加新的）</div>
+    </div>
+    <div class="card">
+      <div class="icon">✏️</div>
+      <div class="title">UPDATE</div>
+      <div class="desc">改数据（修改旧的）</div>
+    </div>
+    <div class="card">
+      <div class="icon">🗑️</div>
+      <div class="title">DELETE</div>
+      <div class="desc">删数据（不要了）</div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <div class="big">SELECT = 看 | INSERT = 加 | UPDATE = 改 | DELETE = 删</div>
+  </div>
+
+  <p>接下来我们一个个学！🚀</p>
+</section>
+
+<!-- 第五章：SELECT -->
+<section id="ch5">
+  <div class="emoji-icon">🔍</div>
+  <h2 class="sec-title">
+    5. 查数据 SELECT
+    <span class="tag">最常用</span>
+  </h2>
+
+  <p><strong>SELECT</strong> 是最最常用的命令，用来<strong>查看</strong>表里的数据。</p>
+
+  <h3>📌 基础用法</h3>
+
+<pre><code><span class="cm">-- 查出所有数据（* 表示所有列）</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> dinosaurs;</code></pre>
+
+  <p>结果：</p>
+  <table>
+    <tr><th>id</th><th>name</th><th>type</th><th>age</th></tr>
+    <tr><td>1</td><td>霸王龙</td><td>肉食恐龙</td><td>25</td></tr>
+    <tr><td>2</td><td>三角龙</td><td>草食恐龙</td><td>20</td></tr>
+    <tr><td>3</td><td>翼龙</td><td>飞行恐龙</td><td>15</td></tr>
+  </table>
+
+  <h3>📌 只查某几列</h3>
+
+<pre><code><span class="cm">-- 只看名字和种类，不看年龄</span>
+<span class="kw">SELECT</span> name, type <span class="kw">FROM</span> dinosaurs;</code></pre>
+
+  <table>
+    <tr><th>name</th><th>type</th></tr>
+    <tr><td>霸王龙</td><td>肉食恐龙</td></tr>
+    <tr><td>三角龙</td><td>草食恐龙</td></tr>
+    <tr><td>翼龙</td><td>飞行恐龙</td></tr>
+  </table>
+
+  <div class="analogy">
+    <div class="label">💡 想象一下</div>
+    <p><code>SELECT *</code> = 打开整张纸看</p>
+    <p><code>SELECT name, type</code> = 只看名字和种类那两列，像用手指遮住其他列</p>
+  </div>
+</section>
+
+<!-- 第六章：INSERT -->
+<section id="ch6">
+  <div class="emoji-icon">➕</div>
+  <h2 class="sec-title">
+    6. 加数据 INSERT
+    <span class="tag">增</span>
+  </h2>
+
+  <p><strong>INSERT</strong> 用来<strong>添加新数据</strong>到表里。</p>
+
+  <h3>📌 插入一行数据</h3>
+
+<pre><code><span class="cm">-- 给恐龙表添加一只新恐龙</span>
+<span class="kw">INSERT INTO</span> dinosaurs (name, type, age)
+<span class="kw">VALUES</span> (<span class="str">'剑龙'</span>, <span class="str">'草食恐龙'</span>, <span class="num">18</span>);</code></pre>
+
+  <p>现在表里有 4 只恐龙了：</p>
+  <table>
+    <tr><th>id</th><th>name</th><th>type</th><th>age</th></tr>
+    <tr><td>1</td><td>霸王龙</td><td>肉食恐龙</td><td>25</td></tr>
+    <tr><td>2</td><td>三角龙</td><td>草食恐龙</td><td>20</td></tr>
+    <tr><td>3</td><td>翼龙</td><td>飞行恐龙</td><td>15</td></tr>
+    <tr><td><strong>4</strong></td><td><strong>剑龙</strong></td><td><strong>草食恐龙</strong></td><td><strong>18</strong></td></tr>
+  </table>
+
+  <div class="analogy">
+    <div class="label">🎮 像玩游戏</div>
+    <p>INSERT 就像「<strong>抓了一只新恐龙</strong>」，把它放进整理箱里！</p>
+    <p>id 会<strong>自动</strong>变成 4（因为我们设置了 AUTO_INCREMENT）</p>
+  </div>
+</section>
+
+<!-- 第七章：UPDATE -->
+<section id="ch7">
+  <div class="emoji-icon">✏️</div>
+  <h2 class="sec-title">
+    7. 改数据 UPDATE
+    <span class="tag">改</span>
+  </h2>
+
+  <p><strong>UPDATE</strong> 用来<strong>修改</strong>已有的数据。</p>
+
+  <h3>📌 修改数据</h3>
+
+<pre><code><span class="cm">-- 把剑龙的年龄从18改成22</span>
+<span class="kw">UPDATE</span> dinosaurs
+<span class="kw">SET</span> age = <span class="num">22</span>
+<span class="kw">WHERE</span> name = <span class="str">'剑龙'</span>;</code></pre>
+
+  <p>修改后的表：</p>
+  <table>
+    <tr><th>id</th><th>name</th><th>type</th><th>age</th></tr>
+    <tr><td>1</td><td>霸王龙</td><td>肉食恐龙</td><td>25</td></tr>
+    <tr><td>2</td><td>三角龙</td><td>草食恐龙</td><td>20</td></tr>
+    <tr><td>3</td><td>翼龙</td><td>飞行恐龙</td><td>15</td></tr>
+    <tr><td>4</td><td>剑龙</td><td>草食恐龙</td><td><strong>22</strong> ✅</td></tr>
+  </table>
+
+  <div class="analogy">
+    <div class="label">⚠️ 重要提醒</div>
+    <p><code>WHERE</code> 非常重要！</p>
+    <p>如果没有 <code>WHERE name = '剑龙'</code>，<strong>所有</strong>恐龙的年龄都会变成 22！</p>
+    <p>就像说「把所有恐龙都改名」，结果所有恐龙都变成一个名字了！😱</p>
+  </div>
+
+  <div class="highlight-box">
+    <div class="big">UPDATE 时一定要加 WHERE，否则改全部！</div>
+  </div>
+</section>
+
+<!-- 第八章：DELETE -->
+<section id="ch8">
+  <div class="emoji-icon">🗑️</div>
+  <h2 class="sec-title">
+    8. 删数据 DELETE
+    <span class="tag">删</span>
+  </h2>
+
+  <p><strong>DELETE</strong> 用来<strong>删除</strong>数据。</p>
+
+  <h3>📌 删除数据</h3>
+
+<pre><code><span class="cm">-- 删除翼龙</span>
+<span class="kw">DELETE FROM</span> dinosaurs
+<span class="kw">WHERE</span> name = <span class="str">'翼龙'</span>;</code></pre>
+
+  <p>删除后的表：</p>
+  <table>
+    <tr><th>id</th><th>name</th><th>type</th><th>age</th></tr>
+    <tr><td>1</td><td>霸王龙</td><td>肉食恐龙</td><td>25</td></tr>
+    <tr><td>2</td><td>三角龙</td><td>草食恐龙</td><td>20</td></tr>
+    <tr><td>4</td><td>剑龙</td><td>草食恐龙</td><td>22</td></tr>
+  </table>
+
+  <div class="analogy">
+    <div class="label">🚨 小心！</div>
+    <p>DELETE 删了<strong>就真的没了</strong>！不像电脑的回收站可以恢复！</p>
+    <p>没有 WHERE 的话，会把<strong>整张表的数据都删掉</strong>！</p>
+  </div>
+
+  <h3>📌 清空整张表</h3>
+
+<pre><code><span class="cm">-- 删除所有数据（危险！）</span>
+<span class="kw">DELETE FROM</span> dinosaurs;</code></pre>
+</section>
+
+<!-- 第九章：WHERE -->
+<section id="ch9">
+  <div class="emoji-icon">🎯</div>
+  <h2 class="sec-title">
+    9. 条件 WHERE
+    <span class="tag">筛选</span>
+  </h2>
+
+  <p><strong>WHERE</strong> 就像一个<strong>过滤器</strong>，帮我们找出<strong>符合条件</strong>的数据。</p>
+
+  <h3>📌 常用条件</h3>
+
+<pre><code><span class="cm">-- 找年龄大于20的恐龙</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> dinosaurs
+<span class="kw">WHERE</span> age > <span class="num">20</span>;</code></pre>
+
+  <table>
+    <tr><th>id</th><th>name</th><th>type</th><th>age</th></tr>
+    <tr><td>1</td><td>霸王龙</td><td>肉食恐龙</td><td>25</td></tr>
+    <tr><td>4</td><td>剑龙</td><td>草食恐龙</td><td>22</td></tr>
+  </table>
+
+<pre><code><span class="cm">-- 找草食恐龙</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> dinosaurs
+<span class="kw">WHERE</span> type = <span class="str">'草食恐龙'</span>;</code></pre>
+
+  <table>
+    <tr><th>id</th><th>name</th><th>type</th><th>age</th></tr>
+    <tr><td>2</td><td>三角龙</td><td>草食恐龙</td><td>20</td></tr>
+    <tr><td>4</td><td>剑龙</td><td>草食恐龙</td><td>22</td></tr>
+  </table>
+
+  <h3>📌 条件符号</h3>
+
+  <table>
+    <tr><th>符号</th><th>意思</th><th>例子</th></tr>
+    <tr><td>=</td><td>等于</td><td>age = 20</td></tr>
+    <tr><td>></td><td>大于</td><td>age > 20</td></tr>
+    <tr><td><</td><td>小于</td><td>age < 20</td></tr>
+    <tr><td>>=</td><td>大于等于</td><td>age >= 20</td></tr>
+    <tr><td><=</td><td>小于等于</td><td>age <= 20</td></tr>
+    <tr><td><></td><td>不等于</td><td>type <> '草食'</td></tr>
+  </table>
+
+  <h3>📌 多个条件（AND / OR）</h3>
+
+<pre><code><span class="cm">-- AND：两个条件都要满足</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> dinosaurs
+<span class="kw">WHERE</span> age > <span class="num">20</span> <span class="kw">AND</span> type = <span class="str">'草食恐龙'</span>;
+<span class="cm">-- 结果：只有剑龙（年龄22，又是草食）</span>
+
+<span class="cm">-- OR：满足任意一个就行</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> dinosaurs
+<span class="kw">WHERE</span> age < <span class="num">20</span> <span class="kw">OR</span> name = <span class="str">'霸王龙'</span>;
+<span class="cm">-- 结果：三角龙（年龄20，但age不<20，所以这条不对？）</span>
+<span class="cm">-- 等等... age=20 不小于 20，所以只有霸王龙</span></code></pre>
+</section>
+
+<!-- 第十章：索引 -->
+<section id="ch10">
+  <div class="emoji-icon">📑</div>
+  <h2 class="sec-title">
+    10. 索引是什么？
+    <span class="tag">进阶</span>
+  </h2>
+
+  <p>索引是 MySQL 里一个<strong>很重要</strong>的概念。</p>
+
+  <div class="analogy">
+    <div class="label">📑 索引是什么？</div>
+    <p>想象一本书的<strong>目录</strong>！</p>
+    <p>如果没有目录，想找「MySQL 是什么」这一章，你得<strong>一页一页翻</strong>...</p>
+    <p>有了目录，直接翻到那一页，<strong>快多了</strong>！</p>
+  </div>
+
+  <p>索引就像书的目录，帮 MySQL <strong>快速找到</strong>数据。</p>
+
+  <h3>📌 创建索引</h3>
+
+<pre><code><span class="cm">-- 给 name 列创建索引（像给书加目录）</span>
+<span class="kw">CREATE INDEX</span> idx_name <span class="kw">ON</span> dinosaurs(name);
+
+<span class="cm">-- 给常用的查找加索引</span>
+<span class="kw">CREATE INDEX</span> idx_type_age <span class="kw">ON</span> dinosaurs(type, age);</code></pre>
+
+  <h3>📌 有索引 vs 没索引</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="icon">❌</div>
+      <div class="title">没有索引</div>
+      <div class="desc">100万条数据 → 要翻100万次 😫</div>
+    </div>
+    <div class="card">
+      <div class="icon">✅</div>
+      <div class="title">有索引</div>
+      <div class="desc">100万条数据 → 翻20次搞定！😄</div>
+    </div>
+  </div>
+
+  <div class="analogy">
+    <div class="label">⚠️ 注意</div>
+    <p>索引不是越多越好！</p>
+    <p>就像书不能加太多便利贴，会变乱。</p>
+    <p>索引会占用<strong>额外空间</strong>，而且<strong>修改数据</strong>时也要更新索引，慢了。</p>
+    <p>只给<strong>经常查询</strong>的列加索引！</p>
+  </div>
+</section>
+
+<!-- 总结 -->
+<section>
+  <div class="emoji-icon">🎉</div>
+  <h2 class="sec-title">恭喜你入门了！</h2>
+
+  <p>你已经学会了 MySQL 的基础！来回顾一下：</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="icon">🔍</div>
+      <div class="title">SELECT</div>
+      <div class="desc">查数据</div>
+    </div>
+    <div class="card">
+      <div class="icon">➕</div>
+      <div class="title">INSERT</div>
+      <div class="desc">加数据</div>
+    </div>
+    <div class="card">
+      <div class="icon">✏️</div>
+      <div class="title">UPDATE</div>
+      <div class="desc">改数据</div>
+    </div>
+    <div class="card">
+      <div class="icon">🗑️</div>
+      <div class="title">DELETE</div>
+      <div class="desc">删数据</div>
+    </div>
+    <div class="card">
+      <div class="icon">🎯</div>
+      <div class="title">WHERE</div>
+      <div class="desc">加条件</div>
+    </div>
+    <div class="card">
+      <div class="icon">📑</div>
+      <div class="title">INDEX</div>
+      <div class="desc">加索引</div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <div class="big">这只是开始！MySQL 还有更多有趣的知识等着你！🚀</div>
+  </div>
+
+  <p>接下来可以学习：</p>
+  <ul>
+    <li>📊 <strong>聚合函数</strong>：COUNT、SUM、AVG（统计）</li>
+    <li>🔗 <strong>JOIN</strong>：连接多个表（合并数据）</li>
+    <li>📈 <strong>GROUP BY</strong>：分组统计</li>
+    <li>🌲 <strong>B+ 树索引</strong>：深入理解索引原理</li>
+    <li>🔄 <strong>事务</strong>：保证数据一致性</li>
+  </ul>
+</section>
+
+<footer>
+  <p>MySQL 入门教程 · 用最简单的方式学数据库</p>
+  <p>Made with 💖 for beginners</p>
+</footer>
+
+</div>
+
+<script>
+  // 滚动进度条
+  window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+    document.getElementById('progress').style.width = progress + '%';
+  });
+
+  // 平滑滚动
+  document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+</body>
+</html>
