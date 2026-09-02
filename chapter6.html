@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第6章：加数据 INSERT - MySQL 入门</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html" class="nav-home">🏠 首页</a>
+  <a href="chapter1.html">第1章</a>
+  <a href="chapter2.html">第2章</a>
+  <a href="chapter3.html">第3章</a>
+  <a href="chapter4.html">第4章</a>
+  <a href="chapter5.html">第5章</a>
+  <a href="chapter6.html" class="active">第6章</a>
+  <a href="chapter7.html">第7章</a>
+  <a href="chapter8.html">第8章</a>
+  <a href="chapter9.html">第9章</a>
+  <a href="chapter10.html">第10章</a>
+</nav>
+
+<div class="container">
+  <h1 class="chapter-title"><span class="chapter-num">第6章</span>加数据 INSERT</h1>
+
+  <section class="content">
+    <h2>➕ INSERT 是什么？</h2>
+    <p><strong>INSERT</strong> 用来<strong>添加新数据</strong>到表里。</p>
+  </section>
+
+  <section class="content">
+    <h2>📌 插入一行数据</h2>
+<pre><code><span class="cm">-- 给恐龙表添加一只新恐龙</span>
+<span class="kw">INSERT INTO</span> dinosaurs (name, type, age)
+<span class="kw">VALUES</span> (<span class="str">'剑龙'</span>, <span class="str">'草食恐龙'</span>, <span class="num">18</span>);</code></pre>
+    <p>现在表里有 4 只恐龙了：</p>
+    <table>
+      <tr><th>id</th><th>name</th><th>type</th><th>age</th></tr>
+      <tr><td>1</td><td>霸王龙</td><td>肉食恐龙</td><td>25</td></tr>
+      <tr><td>2</td><td>三角龙</td><td>草食恐龙</td><td>20</td></tr>
+      <tr><td>3</td><td>翼龙</td><td>飞行恐龙</td><td>15</td></tr>
+      <tr><td><strong>4</strong></td><td><strong>剑龙</strong></td><td><strong>草食恐龙</strong></td><td><strong>18</strong></td></tr>
+    </table>
+  </section>
+
+  <section class="content">
+    <div class="analogy">
+      <p>INSERT 就像「<strong>抓了一只新恐龙</strong>」，把它放进整理箱里！</p>
+      <p>id 会<strong>自动</strong>变成 4（因为我们设置了 AUTO_INCREMENT）</p>
+    </div>
+  </section>
+
+  <section class="content">
+    <div class="highlight-box">
+      <div class="big">➕ INSERT INTO 表名 (列1, 列2) VALUES (值1, 值2)</div>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a href="chapter5.html" class="nav-btn">← 上一章</a>
+    <a href="chapter7.html" class="nav-btn next">下一章 →</a>
+  </div>
+</div>
+
+</body>
+</html>
