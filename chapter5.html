@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第5章：查数据 SELECT - MySQL 入门</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav-bar">
+  <a href="index.html" class="nav-home">🏠 首页</a>
+  <a href="chapter1.html">第1章</a>
+  <a href="chapter2.html">第2章</a>
+  <a href="chapter3.html">第3章</a>
+  <a href="chapter4.html">第4章</a>
+  <a href="chapter5.html" class="active">第5章</a>
+  <a href="chapter6.html">第6章</a>
+  <a href="chapter7.html">第7章</a>
+  <a href="chapter8.html">第8章</a>
+  <a href="chapter9.html">第9章</a>
+  <a href="chapter10.html">第10章</a>
+</nav>
+
+<div class="container">
+  <h1 class="chapter-title"><span class="chapter-num">第5章</span>查数据 SELECT</h1>
+
+  <section class="content">
+    <h2>🔍 SELECT 是什么？</h2>
+    <p><strong>SELECT</strong> 是最最常用的命令，用来<strong>查看</strong>表里的数据。</p>
+  </section>
+
+  <section class="content">
+    <h2>📌 查出所有数据</h2>
+<pre><code><span class="cm">-- 查出所有数据（* 表示所有列）</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> dinosaurs;</code></pre>
+    <p>结果：</p>
+    <table>
+      <tr><th>id</th><th>name</th><th>type</th><th>age</th></tr>
+      <tr><td>1</td><td>霸王龙</td><td>肉食恐龙</td><td>25</td></tr>
+      <tr><td>2</td><td>三角龙</td><td>草食恐龙</td><td>20</td></tr>
+      <tr><td>3</td><td>翼龙</td><td>飞行恐龙</td><td>15</td></tr>
+    </table>
+  </section>
+
+  <section class="content">
+    <h2>📌 只查某几列</h2>
+<pre><code><span class="cm">-- 只看名字和种类，不看年龄</span>
+<span class="kw">SELECT</span> name, type <span class="kw">FROM</span> dinosaurs;</code></pre>
+    <table>
+      <tr><th>name</th><th>type</th></tr>
+      <tr><td>霸王龙</td><td>肉食恐龙</td></tr>
+      <tr><td>三角龙</td><td>草食恐龙</td></tr>
+      <tr><td>翼龙</td><td>飞行恐龙</td></tr>
+    </table>
+    <div class="analogy">
+      <p><code>SELECT *</code> = 打开整张纸看</p>
+      <p><code>SELECT name, type</code> = 只看名字和种类那两列，像用手指遮住其他列</p>
+    </div>
+  </section>
+
+  <section class="content">
+    <div class="highlight-box">
+      <div class="big">🔍 SELECT * FROM 表名 = 查出所有数据</div>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a href="chapter4.html" class="nav-btn">← 上一章</a>
+    <a href="chapter6.html" class="nav-btn next">下一章 →</a>
+  </div>
+</div>
+
+</body>
+</html>
